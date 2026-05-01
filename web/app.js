@@ -1,14 +1,17 @@
 const form = document.getElementById('ip-form');
 const input = document.getElementById('ip-input');
+const departmentInput = document.getElementById('department-input');
 const rows = document.getElementById('rows');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const ip = input.value.trim();
+  const department = departmentInput.value.trim();
   if (!ip) return;
-  const res = await fetch('/api/targets', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ip})});
+  const res = await fetch('/api/targets', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ip, department})});
   if (!res.ok) alert(await res.text());
   input.value = '';
+  departmentInput.value = '';
   await load();
 });
 
@@ -22,14 +25,23 @@ async function load(){
   const data = await res.json();
   rows.innerHTML = data.map(t => `
     <tr>
+      <td>${t.department || '—'}</td>
       <td>${t.ip}</td>
       <td class="${t.isUp ? 'up' : 'down'}">${t.isUp ? 'UP' : 'DOWN'}</td>
+      <td>${t.lastOnlineAt || '-'}</td>
+      <td>${t.lastOfflineAt || '-'}</td>
+      <td>${t.statusChangedAt || '-'}</td>
       <td>${t.lastLatencyMs ?? 0}</td>
       <td>${(t.avgLatencyMs ?? 0).toFixed(1)}</td>
       <td>${t.sent}</td>
       <td>${t.received}</td>
       <td>${(t.lossPercent ?? 0).toFixed(1)}</td>
       <td>${t.lastChecked || '-'}</td>
+      <td>
+        <div class="day-bar">
+          ${(t.dayStatus || []).map(s => `<span class="day-seg ${s}"></span>`).join('')}
+        </div>
+      </td>
       <td><button class="remove" onclick="removeIp('${t.ip}')">Удалить</button></td>
     </tr>
   `).join('');

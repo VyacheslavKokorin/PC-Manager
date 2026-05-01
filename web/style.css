@@ -9,3 +9,8 @@ th, td { border:1px solid #334155; padding:8px; text-align:center; }
 .up { color:#22c55e; }
 .down { color:#ef4444; }
 .remove { background:#dc2626; }
+.day-bar { display:flex; gap:2px; min-width:160px; }
+.day-seg { width:6px; height:14px; border-radius:2px; display:inline-block; }
+.day-seg.up { background:#22c55e; }
+.day-seg.down { background:#ef4444; }
+.day-seg.unknown { background:#64748b; }
