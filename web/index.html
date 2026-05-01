@@ -11,12 +11,13 @@
     <h1>IP Monitor Panel</h1>
     <form id="ip-form">
       <input id="ip-input" placeholder="Введите IP (например 8.8.8.8)" required />
+      <input id="department-input" placeholder="Отдел (например, Бухгалтерия)" />
       <button type="submit">Добавить</button>
     </form>
     <table>
       <thead>
       <tr>
-        <th>IP</th><th>Статус</th><th>Last ms</th><th>Avg ms</th><th>Sent</th><th>Recv</th><th>Loss %</th><th>Проверка</th><th></th>
+        <th>Отдел</th><th>IP</th><th>Статус</th><th>Когда был в сети</th><th>Когда был не в сети</th><th>Изменение статуса</th><th>Last ms</th><th>Avg ms</th><th>Sent</th><th>Recv</th><th>Loss %</th><th>Проверка</th><th></th>
       </tr>
       </thead>
       <tbody id="rows"></tbody>
